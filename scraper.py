@@ -1,4 +1,3 @@
-scraper.py# scraper.py
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
@@ -16,7 +15,7 @@ options.add_argument("--disable-dev-shm-usage")
 driver = webdriver.Chrome(options=options)
 driver.get(URL)
 
-# Scroll logic
+# Scroll to bottom using WheelInput
 last_height = driver.execute_script("return document.body.scrollHeight")
 SCROLL_PAUSE_TIME = 2
 
@@ -32,12 +31,18 @@ while True:
         break
     last_height = new_height
 
+# Wait a bit for last products to render
+time.sleep(2)
+
 # Extract product titles and prices
 titles = driver.find_elements(By.CSS_SELECTOR, "div.p13n-sc-truncate, span.zg-item > div > span > a > div")
 prices = driver.find_elements(By.CSS_SELECTOR, "span.p13n-sc-price")
 
-print("제품 목록:")
+# Terminal log: Print all entries
+print("\n📦 Amazon Bestseller (Computer) - Extracted Products\n" + "-"*60)
 for i in range(min(len(titles), len(prices))):
-    print(f"{i+1}. {titles[i].text.strip()} - {prices[i].text.strip()}")
+    title_text = titles[i].text.strip()
+    price_text = prices[i].text.strip()
+    print(f"{i+1:02d}. {title_text} | 💶 {price_text}")
 
 driver.quit()
