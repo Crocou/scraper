@@ -5,7 +5,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.actions.wheel_input import ScrollOrigin
 import time
 
-URL = "https://www.amazon.de/-/en/gp/bestsellers/computers/429868031/"
+URL = "https://www.amazon.de/gp/bestsellers/computers/429868031/"
 
 options = Options()
 options.add_argument("--headless")
